@@ -1,0 +1,8 @@
+
+.success input {
+    border-color: #09c372;
+}
+
+.error input {
+    border-color: #ff3860;
+}
