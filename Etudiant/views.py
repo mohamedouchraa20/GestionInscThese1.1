@@ -27,15 +27,14 @@ def Inscription(request):
             # Vérification de la validité des données
             if password != password1:
                 passErr = "Les mots de passe ne correspondent pas."
-                messages.error(request, "Les mots de passe ne correspondent pas.")
-                return redirect('Inscription')
+                return render(request, 'Etudiant/Signup.html', {'passDef': passErr})
+
             if Utilisateur.objects.filter(email=email):
-                emailErr = email + " déja exist !! "
-                messages.error(request, "Cet e-mail " + email + " est déjà utilisé.")
-                return redirect('Inscription')
+                emailExist = email + " est déjà utilisé. "
+                return render(request, 'Etudiant/Signup.html', {'emailExist': emailExist})
+
             if not nom:
                 # return render(request, 'Etudiant/Signup.html', {'nomErr': videErr})
-
                 if not prenom:
                     # return render(request, 'Etudiant/Signup.html', {'prenomErr': videErr})
                     if not email:
@@ -43,19 +42,23 @@ def Inscription(request):
                         if not password:
                             #  return render(request, 'Etudiant/Signup.html', {'passErr': videErr})
                             if not password1:
-                                return render(request, 'Etudiant/Signup.html', {'pass1Err': videErr,'nomErr': videErr, 'prenomErr': videErr,'passErr': videErr,'emailErr': videErr  })
+                                return render(request, 'Etudiant/Signup.html',
+                                              {'pass1Err': videErr, 'nomErr': videErr, 'prenomErr': videErr,
+                                               'passErr': videErr, 'emailErr': videErr})
                             else:
-                                return render(request, 'Etudiant/Signup.html', {'nomErr': videErr, 'prenomErr': videErr,'passErr': videErr,'emailErr': videErr})
+                                return render(request, 'Etudiant/Signup.html',
+                                              {'nomErr': videErr, 'prenomErr': videErr, 'passErr': videErr,
+                                               'emailErr': videErr})
                         else:
-                            return render(request, 'Etudiant/Signup.html', {'nomErr': videErr, 'prenomErr': videErr,'emailErr': videErr})
+                            return render(request, 'Etudiant/Signup.html',
+                                          {'nomErr': videErr, 'prenomErr': videErr, 'emailErr': videErr})
                     else:
-                        return render(request, 'Etudiant/Signup.html', {'nomErr': videErr, 'prenomErr': videErr,})
+                        return render(request, 'Etudiant/Signup.html', {'nomErr': videErr, 'prenomErr': videErr, })
                 else:
                     return render(request, 'Etudiant/Signup.html', {'nomErr': videErr})
-
             # Rediriger l'utilisateur vers une page de confirmation
             user.save()
-            return redirect('Etudiant')
+            return redirect('Formulaire')
     else:
         form = EtudiantForm()
     return render(request, 'Etudiant/Signup.html', {'form': form})
@@ -96,3 +99,8 @@ def Login(request):
     else:
         form = LoginForm()
     return render(request, 'Etudiant/Login.html', {'form': form})
+
+def Formulaire(request):
+    return render(request, 'Etudiant/EspacePersonnel/Formulaire.html', {})
+
+

@@ -1,0 +1,76 @@
+
+
+form {
+    width: 80%;
+    margin: 0 auto;
+    margin:  auto;
+    padding: 30px;
+    background-color: #75f3a7;
+    border: #ee0707 solid;
+    border-radius: 10px;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.4);
+}
+/* Style pour les lignes de deux colonnes */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 10px 0;
+}
+
+.col {
+    flex-basis: 50%;
+    padding: 0 10px;
+}
+
+/* Style pour les labels */
+label {
+    display: inline-block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+/* Style pour les champs de saisie */
+input[type="text"],
+input[type="date"],
+input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* Style pour le bouton Envoyer */
+button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+form {
+    width: 80%;
+    margin: 0 auto;
+    margin:  auto;
+    padding: 30px;
+    background-color: #75f3a7;
+    border: #ee0707 solid;
+    border-radius: 10px;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.4);
+}
+
+
+/* Media queries pour rendre le formulaire adaptable */
+@media only screen and (max-width: 768px) {
+    .col {
+        flex-basis: 100%;
+        padding: 0;
+    }
+}

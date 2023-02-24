@@ -17,14 +17,14 @@
                     <p class="Err">{{ prenomErr }}</p>
         <label>Email:</label>
         <input type="email" name="Email" >
-                    <p class="Err">{{ emailErr }}</p>
+                    <p class="Err">{{ emailErr }} {{ emailExist }}</p>
         <label>Mot de passe:</label>
         <input type="password" name="password" >
                      <p class="Err">{{ passErr }}</p>
 
         <label>Confirmer le mot de passe:</label>
         <input type="password" name="password1" >
-                     <p class="Err">{{ pass1Err }}</p>
+                     <p class="Err">{{ pass1Err }} {{ passDef }}</p>
 
             {% if messages %}
                 <ul class="messages">
@@ -37,9 +37,9 @@
                                 inputs.forEach(input => {
                                     input.addEventListener('input', () => {
                                         if (input.value === '') {
-                                            input.style.border = '2px solid red';
+                                            input.style.border = '2px solid #ee0707';
                                         } else {
-                                            input.style.border = '1px solid #ccc';
+                                            input.style.border = '1px solid ';
                                         }
                                     });
                                 });
