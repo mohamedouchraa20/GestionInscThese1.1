@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/Etudiant/Login.css' %}">
+
+<div class="container1">
+  <h2></h2>
+  <form method="post">
+    <h2>Connexion utilisateur</h2>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Se connecter</button>
+  </form>
+</div>
+{% endblock %}

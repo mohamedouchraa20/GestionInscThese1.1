@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet"  href="{% static 'css/Etudiant/Inscription.css' %}">
+<p class="container">
+    <h2></h2>
+    <form method="post">
+        {% csrf_token %}
+        <h2>Inscription étudiant</h2>
+        <!--{{ form.as_p }}-->
+        <label>Nom:</label>
+        <input type="text" name="Nom" >
+                <p class="Err">{{ nomErr }}</p>
+        <label>Prenom:</label>
+        <input type="text" name="Prenom" >
+                    <p class="Err">{{ prenomErr }}</p>
+        <label>Email:</label>
+        <input type="email" name="Email" >
+                    <p class="Err">{{ emailErr }}</p>
+        <label>Mot de passe:</label>
+        <input type="password" name="password" >
+                     <p class="Err">{{ passErr }}</p>
+
+        <label>Confirmer le mot de passe:</label>
+        <input type="password" name="password1" >
+                     <p class="Err">{{ pass1Err }}</p>
+
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li >{% if message.tags %}
+                            class="{{ message.tags }}"
+                            <script>
+                                const inputs = document.querySelectorAll('input');
+
+                                inputs.forEach(input => {
+                                    input.addEventListener('input', () => {
+                                        if (input.value === '') {
+                                            input.style.border = '2px solid red';
+                                        } else {
+                                            input.style.border = '1px solid #ccc';
+                                        }
+                                    });
+                                });
+                            </script>
+                            {% endif %}>{{ message }}
+                        </li>
+                    {% endfor %}
+                </ul>
+             {% endif %}
+        <button type="submit">S'inscrire</button>
+    </form>
+
+</div>
+<!--
+<script>
+    const inputs = document.querySelectorAll('input');
+
+    inputs.forEach(input => {
+        input.addEventListener('input', () => {
+            if (input.value === '') {
+                input.style.backgroundColor = 'red';
+            } else {
+                input.style.backgroundColor = 'white';
+            }
+        });
+    });
+</script>
+-->
+{% endblock %}
