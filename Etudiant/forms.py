@@ -14,7 +14,7 @@ class EtudiantForm(UserCreationForm):
 
 
 class LoginForm(AuthenticationForm):
-    username = forms.CharField(
+    email = forms.CharField(
         label='Nom d\'utilisateur',
         widget=forms.TextInput(attrs={'autofocus': True})
     )

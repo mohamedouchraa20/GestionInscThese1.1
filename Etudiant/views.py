@@ -1,10 +1,13 @@
+from time import sleep
+
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from .forms import *
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
+from .models import *
 
 
 # Create your views here.
@@ -21,6 +24,8 @@ def Inscription(request):
             email = request.POST.get('Email')
             password = request.POST.get('password')
             password1 = request.POST.get('password1')
+            user = User.objects.create_user(username=email, email=email, password=password, first_name=prenom,
+                                            last_name=nom)
             user = Utilisateur(Nom=nom, Prenom=prenom, email=email, password=password)
             # les erreurs
             videErr = "Ce champs est obligatoires."
@@ -33,36 +38,59 @@ def Inscription(request):
                 emailExist = email + " est déjà utilisé. "
                 return render(request, 'Etudiant/Signup.html', {'emailExist': emailExist})
 
-            if not nom:
-                # return render(request, 'Etudiant/Signup.html', {'nomErr': videErr})
-                if not prenom:
-                    # return render(request, 'Etudiant/Signup.html', {'prenomErr': videErr})
-                    if not email:
-                        # return render(request, 'Etudiant/Signup.html', {'emailErr': videErr})
-                        if not password:
-                            #  return render(request, 'Etudiant/Signup.html', {'passErr': videErr})
-                            if not password1:
-                                return render(request, 'Etudiant/Signup.html',
-                                              {'pass1Err': videErr, 'nomErr': videErr, 'prenomErr': videErr,
-                                               'passErr': videErr, 'emailErr': videErr})
-                            else:
-                                return render(request, 'Etudiant/Signup.html',
-                                              {'nomErr': videErr, 'prenomErr': videErr, 'passErr': videErr,
-                                               'emailErr': videErr})
-                        else:
-                            return render(request, 'Etudiant/Signup.html',
-                                          {'nomErr': videErr, 'prenomErr': videErr, 'emailErr': videErr})
-                    else:
-                        return render(request, 'Etudiant/Signup.html', {'nomErr': videErr, 'prenomErr': videErr, })
-                else:
-                    return render(request, 'Etudiant/Signup.html', {'nomErr': videErr})
-            # Rediriger l'utilisateur vers une page de confirmation
-            user.save()
-            return redirect('Formulaire')
-    else:
-        form = EtudiantForm()
-    return render(request, 'Etudiant/Signup.html', {'form': form})
+            if not nom or not prenom or not email or not password or not password1:
+                return redirect('Inscription')
 
+            # Rediriger l'utilisateur vers une page de confirmation
+            else:
+                user.save()
+                return redirect('Formulaire')
+
+    return render(request, 'Etudiant/Signup.html', {})
+
+
+def Login(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+
+        utilisateur = Utilisateur.objects.get(email=email)
+        if Utilisateur.objects.get(email=email) is not None and Utilisateur.objects.all().filter(password=password).exists():
+            user = authenticate(request, username=email, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('Etudiant')
+            else:
+                return HttpResponse('Email ou mot de passe incorrect.')
+
+    return render(request, 'Etudiant/Login.html', {})
+
+
+def Logout(request):
+    logout(request)
+    return redirect('/')
+
+
+def Formulaire(request):
+    return render(request, 'Etudiant/EspacePersonnel/Formulaire.html', {})
+
+
+"""
+        #user = Utilisateur(email=email, password=password)
+        user = authenticate(request, username=email, password=password)
+        if Utilisateur.objects.all().filter(email=email):
+            if Utilisateur.objects.all().filter(password=password).exists():
+                login(request, user)
+                nomErr = "connecte "
+                return redirect('Etudiant')
+                #return render(request, 'Etudiant/Login.html', {'nomErr': nomErr})
+            else:
+                nomErr = "mot de passe inccorect"
+                return render(request, 'Etudiant/Etudiant.html', {'nomErr':nomErr})
+        else:
+            nomErr = "email n'exist pas"
+            return render(request, 'Etudiant/Login.html', {'nomErr':nomErr})
+"""
 
 """
 def Login(request):
@@ -87,20 +115,3 @@ def Inscription(request):
     form = EtudiantForm()
     return render(request, 'Etudiant/Signup.html', {'form': form})
 """
-
-
-def Login(request):
-    if request.method == 'POST':
-        form = LoginForm(data=request.POST)
-        if form.is_valid():
-            user = form.get_user()
-            login(request, user)
-            return redirect('home')
-    else:
-        form = LoginForm()
-    return render(request, 'Etudiant/Login.html', {'form': form})
-
-def Formulaire(request):
-    return render(request, 'Etudiant/EspacePersonnel/Formulaire.html', {})
-
-

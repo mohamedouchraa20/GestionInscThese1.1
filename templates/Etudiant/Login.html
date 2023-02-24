@@ -6,10 +6,20 @@
 
 <div class="container1">
   <h2></h2>
-  <form method="post">
+  <form method="post" >
     <h2>Connexion utilisateur</h2>
     {% csrf_token %}
-    {{ form.as_p }}
+    <!--{{ form.as_p }} -->
+      <label>Email:</label>
+        <input type="email" id="email" name="email" >
+        <div class="Err">{{ nomErr }}</div>
+        <p class="Err">{{ nomErr }}</p>
+
+        <label>Mot de passe:</label>
+        <input type="password" id="password" name="password" >
+        <div class="Err">{{ nomErr }}</div>
+        <p class="Err">{{ nomErr }}</p>
+
     <button type="submit">Se connecter</button>
   </form>
 </div>

@@ -4,19 +4,27 @@
 <link rel="stylesheet" href="{% static 'css/Parts/navbare.css' %}" >
 
 <div class="navbar">
-    <a href=" {% url '/' %}">GRT</a>
+    <a href=" {% url '/' %}">Logo</a>
     <a href=" {% url '/' %}">Accueil</a>
     <a href="{% url 'Etudiant'%}">etudiant</a>
+    {% if user.is_authentificated %}
+      <div class="dropdown">
+          <a href="{% url 'Inscription'%}">bienvenue, {{ user.Nom }} {{ user.Prenom }}</a>
+          <a href="{% url 'Login'%}">Logout</a>
 
-  <div class="dropdown">
-    <button class="dropbtn">Se connecter
-      <i class="fa fa-caret-down"></i>
-    </button>
-    <div class="dropdown-content">
-      <a href="{% url 'Inscription'%}">s'inscrire</a>
-      <a href="{% url 'Login'%}">Authentification</a>
-    </div>
-  </div>
+      </div>
+    {% else %}
+      <div class="dropdown">
+        <button class="dropbtn">Se connecter
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+          <a href="{% url 'Inscription'%}">s'inscrire</a>
+          <a href="{% url 'Login'%}">Authentification</a>
+        </div>
+      </div>
+    {% endif %}
+
 </div>
 
 

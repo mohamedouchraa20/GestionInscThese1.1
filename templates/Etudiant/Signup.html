@@ -5,26 +5,118 @@
 <link rel="stylesheet"  href="{% static 'css/Etudiant/Inscription.css' %}">
 <p class="container">
     <h2></h2>
-    <form method="post">
+    <form method="post" id="form" >
         {% csrf_token %}
         <h2>Inscription étudiant</h2>
         <!--{{ form.as_p }}-->
         <label>Nom:</label>
-        <input type="text" name="Nom" >
-                <p class="Err">{{ nomErr }}</p>
+        <input type="text" id="nom" name="Nom" >
+        <div class="Err">{{ nomErr }}</div>
+        <p class="Err">{{ nomErr }}</p>
+
         <label>Prenom:</label>
-        <input type="text" name="Prenom" >
-                    <p class="Err">{{ prenomErr }}</p>
+        <input type="text" id="prenom" name="Prenom" >
+        <div class="Err">{{ nomErr }}</div>
+        <p class="Err">{{ nomErr }}</p>
+
         <label>Email:</label>
-        <input type="email" name="Email" >
-                    <p class="Err">{{ emailErr }} {{ emailExist }}</p>
+        <input type="email" id="email" name="Email" >
+        <div class="Err">{{ nomErr }}</div>
+        <p class="Err">{{ nomErr }}</p>
+
         <label>Mot de passe:</label>
-        <input type="password" name="password" >
-                     <p class="Err">{{ passErr }}</p>
+        <input type="password" id="password" name="password" >
+        <div class="Err">{{ nomErr }}</div>
+        <p class="Err">{{ nomErr }}</p>
 
         <label>Confirmer le mot de passe:</label>
-        <input type="password" name="password1" >
-                     <p class="Err">{{ pass1Err }} {{ passDef }}</p>
+        <input type="password" id="password2" name="password1" >
+        <div class="Err">{{ nomErr }}</div>
+        <p class="Err">{{ nomErr }}</p>
+
+        <button type="submit">S'inscrire</button>
+    </form>
+
+    <script>
+
+          const form = document.querySelector('form');
+          const nom = document.getElementById('nom');
+          const prenom = document.getElementById('prenom');
+          const email = document.getElementById('email');
+          const motDePasse = document.getElementById('password');
+          const motDePasseConfirmation = document.getElementById('password2');
+
+          function validateForm() {
+            let isValid = true;
+            let message = "Ce champ est obligatoires."
+            // Vérifier si les champs sont vides
+            if (nom.value === '') {
+              nom.style.borderColor = 'red';
+              const inputContol = nom.parentElement;
+              const errorDisplay = inputControl.querySelector('.Err');
+               errorDisplay.innerText = message;
+              inputContol.classList.add('Err');
+              isValid = false;
+            } else {
+              nom.style.borderColor = '';
+            }
+
+            if (prenom.value === '') {
+              prenom.style.border = 'red 2px' ;
+              const inputContol = prenom.parentElement;
+              const errorDisplay = inputControl.querySelector('.Err');
+              errorDisplay.innerText = message;
+              inputContol.classList.add('Err');
+              isValid = false;
+            } else {
+              prenom.style.borderColor = '';
+            }
+
+            if (email.value === '') {
+              email.style.borderColor = 'red';
+              const inputContol = email.parentElement;
+              const errorDisplay = inputControl.querySelector('.Err');
+              errorDisplay.innerText = message;
+              inputContol.classList.add('Err');
+              isValid = false;
+            } else {
+              email.style.borderColor = '';
+            }
+
+            if (motDePasse.value === '') {
+              motDePasse.style.border = 'red 2px' ;
+              isValid = false;
+            } else {
+              motDePasse.style.borderColor = '';
+            }
+
+            if (motDePasseConfirmation.value === '') {
+              motDePasseConfirmation.style.border = 'red 2px' ;
+              isValid = false;
+            } else {
+              motDePasseConfirmation.style.borderColor = '';
+            }
+
+            // Vérifier si les mots de passe correspondent
+            if (motDePasse.value !== motDePasseConfirmation.value) {
+              motDePasse.style.border = 'red 2px' ;
+              motDePasseConfirmation.style.border = 'red 2px';
+              isValid = false;
+            }
+
+            return isValid;
+          }
+
+          form.addEventListener('submit', function(event) {
+            if (!validateForm()) {
+              event.preventDefault();
+            }
+          });
+
+    </script>
+</div>
+{% endblock %}
+<!--
 
             {% if messages %}
                 <ul class="messages">
@@ -49,10 +141,23 @@
                     {% endfor %}
                 </ul>
              {% endif %}
-        <button type="submit">S'inscrire</button>
-    </form>
+-->
 
-</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!--
 <script>
     const inputs = document.querySelectorAll('input');
@@ -68,4 +173,4 @@
     });
 </script>
 -->
-{% endblock %}
+
